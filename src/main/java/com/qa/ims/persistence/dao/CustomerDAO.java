@@ -21,9 +21,10 @@ public class CustomerDAO implements Dao<Customer> {
 	@Override
 	public Customer modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		String firstName = resultSet.getString("first_name");
+		String email = resultSet.getString("email");
+		String firstName = resultSet.getString("firstName");
 		String surname = resultSet.getString("surname");
-		return new Customer(id, firstName, surname);
+		return new Customer(id, email, firstName, surname);
 	}
 
 	/**
@@ -74,10 +75,11 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer create(Customer customer) {
 		try (
 			Connection connection = DBUtils.getInstance().getConnection();
-			PreparedStatement statement = connection.prepareStatement("INSERT INTO customers(first_name, surname) VALUES (?, ?)");
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO customers(email, firstName, surname) VALUES (?, ?, ?)");
 		) {
-			statement.setString(1, customer.getFirstName());
-			statement.setString(2, customer.getSurname());
+			statement.setString(1, customer.getEmail());
+			statement.setString(2, customer.getFirstName());
+			statement.setString(3, customer.getSurname());
 			statement.executeUpdate();
 			return readLatest();
 		} catch (Exception e) {
@@ -116,11 +118,12 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer update(Customer customer) {
 		try (
 			Connection connection = DBUtils.getInstance().getConnection();
-			PreparedStatement statement = connection.prepareStatement("UPDATE customers SET first_name = ?, surname = ? WHERE id = ?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE customers SET email = ?, first_name = ?, surname = ? WHERE id = ?");
 		) {
-			statement.setString(1, customer.getFirstName());
-			statement.setString(2, customer.getSurname());
-			statement.setLong(3, customer.getId());
+			statement.setString(1, customer.getEmail());
+			statement.setString(2, customer.getFirstName());
+			statement.setString(3, customer.getSurname());
+			statement.setLong(4, customer.getId());
 			statement.executeUpdate();
 			return read(customer.getId());
 		} catch (Exception e) {
@@ -149,5 +152,5 @@ public class CustomerDAO implements Dao<Customer> {
 		}
 		return 0;
 	}
-	
+
 }

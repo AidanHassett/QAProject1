@@ -43,11 +43,13 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public Customer create() {
+		LOGGER.info("Please enter an email");
+		String email = utils.getString();
 		LOGGER.info("Please enter a first name");
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
-		Customer customer = customerDAO.create(new Customer(firstName, surname));
+		Customer customer = customerDAO.create(new Customer(email, firstName, surname));
 		LOGGER.info("Customer created");
 		return customer;
 	}
@@ -59,18 +61,20 @@ public class CustomerController implements CrudController<Customer> {
 	public Customer update() {
 		LOGGER.info("Please enter the id of the customer you would like to update");
 		Long id = utils.getLong();
+		LOGGER.info("Please enter an email");
+		String email = utils.getString();
 		LOGGER.info("Please enter a first name");
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
-		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
+		Customer customer = customerDAO.update(new Customer(id, email, firstName, surname));
 		LOGGER.info("Customer Updated");
 		return customer;
 	}
 
 	/**
 	 * Deletes an existing customer by the id of the customer
-	 * 
+	 *
 	 * @return
 	 */
 	@Override

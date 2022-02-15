@@ -28,6 +28,13 @@ public class Customer {
 		this.setSurname(surname);
 	}
 
+	public Customer(Long id, String email, String firstName, String surname) {
+		this.setId(id);
+		this.setEmail(email);
+		this.setFirstName(firstName);
+		this.setSurname(surname);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -109,7 +116,7 @@ public class Customer {
 				return false;
 		} else if (!getSurname().equals(other.getSurname()))
 			return false;
-			
+
 		return true;
 	}
 
