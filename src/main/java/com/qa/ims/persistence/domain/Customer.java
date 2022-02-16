@@ -1,29 +1,14 @@
 package com.qa.ims.persistence.domain;
 
-public class Customer {
+public class Customer implements Comparable<Customer> {
 
 	private Long id;
 	private String email;
 	private String firstName;
 	private String surname;
 
-	public Customer(String email) {
-		this.setEmail(email);
-	}
-
-	public Customer(String firstName, String surname) {
-		this.setFirstName(firstName);
-		this.setSurname(surname);
-	}
-
 	public Customer(String email, String firstName, String surname) {
 		this.setEmail(email);
-		this.setFirstName(firstName);
-		this.setSurname(surname);
-	}
-
-	public Customer(Long id, String firstName, String surname) {
-		this.setId(id);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
 	}
@@ -76,15 +61,25 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		try {
+			if (this.compareTo((Customer) obj) == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NullPointerException | ClassCastException e) {
+			return false;
+		}
+		/* // premade implementation
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -118,6 +113,32 @@ public class Customer {
 			return false;
 
 		return true;
+		*/
 	}
 
+	public int compareTo(Customer other) throws NullPointerException, ClassCastException {
+		if (other == null) {
+			throw new NullPointerException();
+		}
+		if (this.getClass() != other.getClass()) {
+			throw new ClassCastException();
+		}
+
+		int temp = this.getId().compareTo(other.getId());
+		if (temp != 0) {
+			return temp;
+		} else {
+			temp = this.getSurname().compareTo(other.getSurname());
+			if (temp != 0) {
+				return temp;
+			} else {
+				temp = this.getFirstName().compareTo(other.getFirstName());
+				if (temp != 0) {
+					return temp;
+				} else {
+					return this.getEmail().compareTo(other.getEmail());
+				}
+			}
+		}
+	}
 }
