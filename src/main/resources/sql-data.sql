@@ -2002,7 +2002,7 @@ VALUES ('Olives - Black, Pitted', 12.86),
   ('Chocolate Eclairs', 34.57),
   ('Bread - Bistro Sour', 17.29);
 
-INSERT INTO orders (fk_customer, timePlaced)
+INSERT INTO orders (customerId, timePlaced)
 VALUES (535, '2021-04-11 10:49:36'),
   (886, '2021-04-04 13:35:12'),
   (138, '2021-06-28 09:29:40'),
@@ -3004,7 +3004,7 @@ VALUES (535, '2021-04-11 10:49:36'),
   (695, '2022-01-03 04:44:34'),
   (88, '2021-11-18 18:09:15');
 
-INSERT INTO orderItems (fk_order, fk_item, quantity)
+INSERT INTO orderItems (orderId, itemId, quantity)
 VALUES (396, 445, 1),
   (534, 211, 1),
   (137, 629, 1),

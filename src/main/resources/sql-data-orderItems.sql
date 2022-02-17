@@ -1,4 +1,4 @@
-INSERT INTO orderItems (fk_order, fk_item, quantity)
+INSERT INTO orderItems (orderId, itemId, quantity)
 VALUES (396, 445, 1),
   (534, 211, 1),
   (137, 629, 1),
