@@ -21,17 +21,17 @@ CREATE TABLE IF NOT EXISTS ims.items (
 
 CREATE TABLE IF NOT EXISTS ims.orders (
   id INT NOT NULL AUTO_INCREMENT,
-  fk_customer INT NOT NULL,
+  customerId INT NOT NULL,
   timePlaced TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (fk_customer) REFERENCES customers(id)
+  FOREIGN KEY (customerId) REFERENCES customers(id)
 );
 
 CREATE TABLE IF NOT EXISTS ims.orderItems (
-  fk_order INT NOT NULL,
-  fk_item INT NOT NULL,
+  orderId INT NOT NULL,
+  itemId INT NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
-  PRIMARY KEY (fk_order, fk_item),
-  FOREIGN KEY (fk_order) REFERENCES orders(id),
-  FOREIGN KEY (fk_item) REFERENCES items(id)
+  PRIMARY KEY (orderId, itemId),
+  FOREIGN KEY (orderId) REFERENCES orders(id),
+  FOREIGN KEY (itemId) REFERENCES items(id)
 );

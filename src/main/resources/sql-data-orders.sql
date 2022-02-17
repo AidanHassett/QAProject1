@@ -1,4 +1,4 @@
-INSERT INTO orders (fk_customer, timePlaced)
+INSERT INTO orders (customerId, timePlaced)
 VALUES (535, '2021-04-11 10:49:36'),
   (886, '2021-04-04 13:35:12'),
   (138, '2021-06-28 09:29:40'),
