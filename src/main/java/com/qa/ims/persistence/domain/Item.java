@@ -52,8 +52,8 @@ public class Item implements Comparable<Item> {
 		this.title = title;
 	}
 
-	public Long getPrice() {
-		return price;
+	public Double getPrice() {
+		return price / 100.0;
 	}
 
 	public String getPriceStr() {
@@ -136,7 +136,7 @@ public class Item implements Comparable<Item> {
 		if (this.getClass() != other.getClass()) {
 			throw new ClassCastException();
 		}
-		
+
 		int temp = this.getId().compareTo(other.getId());
 		if (temp != 0) {
 			return temp;

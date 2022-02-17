@@ -36,6 +36,10 @@ public class OrderItem implements Comparable<OrderItem> {
 		this.quantity = quantity;
 	}
 
+	public void addQuantity(Long additional) {
+		this.quantity += additional;
+	}
+
 	@Override
 	public String toString() {
 		return "orderId:" + orderId + " itemId:" + itemId + " quantity:" + quantity;

@@ -1,30 +1,31 @@
 package com.qa.ims.persistence.domain;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.TreeSet;
+import java.util.Collection;
+import java.util.TreeMap;
 
 public class Order implements Comparable<Order> {
 
 	private Long id;
 	private Long customerId;
-	private Date timePlaced;
-	private TreeSet<OrderItem> orderItems;
+	private Timestamp timePlaced;
+	private TreeMap<Long, OrderItem> orderItems;
 
 
-	public Order(Long customerId, Date timePlaced) {
+	public Order(Long customerId, Timestamp timePlaced) {
 		this.setCustomerId(customerId);
 		this.setTimePlaced(timePlaced);
-		this.orderItems = new TreeSet<OrderItem>();
+		this.orderItems = new TreeMap<Long, OrderItem>();
 	}
 
 	public Order(Long customerId, Long timePlaced) {
 		this.setCustomerId(customerId);
 		this.setTimePlaced(timePlaced);
-		this.orderItems = new TreeSet<OrderItem>();
+		this.orderItems = new TreeMap<Long, OrderItem>();
 	}
 
-	public Order(Customer customer, Date timePlaced) {
+	public Order(Customer customer, Timestamp timePlaced) {
 		this(customer.getId(), timePlaced);
 	}
 
@@ -32,7 +33,7 @@ public class Order implements Comparable<Order> {
 		this(customer.getId(), timePlaced);
 	}
 
-	public Order(Long id, Long customerId, Date timePlaced) {
+	public Order(Long id, Long customerId, Timestamp timePlaced) {
 		this(customerId, timePlaced);
 		this.id = id;
 	}
@@ -42,7 +43,7 @@ public class Order implements Comparable<Order> {
 		this.id = id;
 	}
 
-	public Order(Long id, Customer customer, Date timePlaced) {
+	public Order(Long id, Customer customer, Timestamp timePlaced) {
 		this(customer, timePlaced);
 		this.id = id;
 	}
@@ -72,7 +73,7 @@ public class Order implements Comparable<Order> {
 		this.setCustomerId(customer.getId());
 	}
 
-	public Date getTimePlaced() {
+	public Timestamp getTimePlaced() {
 		return timePlaced;
 	}
 
@@ -80,20 +81,34 @@ public class Order implements Comparable<Order> {
 		return DateFormat.getDateTimeInstance().format(timePlaced);
 	}
 
-	public void setTimePlaced(Date timePlaced) {
+	public void setTimePlaced(Timestamp timePlaced) {
 		this.timePlaced = timePlaced;
 	}
 
 	public void setTimePlaced(Long timePlaced) {
-		setTimePlaced(new Date(timePlaced));
+		setTimePlaced(new Timestamp(timePlaced));
 	}
 
-	public void addOrderItem(OrderItem oi) {
-		orderItems.add(oi);
+	public OrderItem getOrderItem(Long itemId) {
+		return orderItems.get(itemId);
 	}
 
-	public OrderItem[] getOrderItems() {
-		return orderItems.toArray(new OrderItem[orderItems.size()]);
+	public Collection<OrderItem> getAllOrderItems() {
+		return orderItems.values();
+	}
+
+	public OrderItem addOrderItem(Long itemId, Long quantity) {
+		if (orderItems.containsKey(itemId)) {
+			OrderItem oi = orderItems.get(itemId);
+			oi.addQuantity(quantity);
+			return oi;
+		} else {
+			return replaceOrderItem(itemId, quantity);
+		}
+	}
+
+	public OrderItem replaceOrderItem(Long itemId, Long quantity) {
+		return orderItems.put(itemId, new OrderItem(this.id, itemId, quantity));
 	}
 
 	@Override
