@@ -43,7 +43,6 @@ public class IMS {
 	private void domainAction(Domain domain) {
 		boolean changeDomain = false;
 		do {
-
 			CrudController<?> active = null;
 			switch (domain) {
 			case CUSTOMER:
