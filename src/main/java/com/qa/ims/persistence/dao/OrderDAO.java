@@ -27,7 +27,7 @@ public class OrderDAO implements Dao<Order> {
 	 * @param order - Takes in an order object
 	 * @return The same order object passed in
 	 */
-	private Order fillOrderItems(Order order) {
+	public Order fillOrderItems(Order order) {
 		try (
 			Connection connection = DBUtils.getInstance().getConnection();
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM orderItems WHERE orderId = ?");

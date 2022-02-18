@@ -108,12 +108,25 @@ public class Order implements Comparable<Order> {
 	}
 
 	public OrderItem replaceOrderItem(Long itemId, Long quantity) {
-		return orderItems.put(itemId, new OrderItem(this.id, itemId, quantity));
+		if (quantity <= 0) {
+			deleteOrderItem(itemId);
+			return null;
+		} else {
+			return orderItems.put(itemId, new OrderItem(this.id, itemId, quantity));
+		}
+	}
+
+	public void deleteOrderItem(Long itemId) {
+		orderItems.remove(itemId);
 	}
 
 	@Override
 	public String toString() {
-		return "id:" + id + " customerId:" + customerId + " timePlaced:" + getTimePlacedStr();
+		String result = "id:" + id + " customerId:" + customerId + " timePlaced:" + getTimePlacedStr() + "/r/n  Items:";
+		for (OrderItem oi : getAllOrderItems()) {
+			result += "/r/n  " + oi.toString();
+		}
+		return result;
 	}
 
 	@Override
@@ -123,6 +136,7 @@ public class Order implements Comparable<Order> {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((timePlaced == null) ? 0 : timePlaced.hashCode());
+		result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
 		return result;
 	}
 
