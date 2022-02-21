@@ -9,10 +9,8 @@ Simply clone the GitHub repository to install. To run, execute Runner.java.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
 ```
-Give examples
+Java 1.8 or higher
 ```
 
 ### Installing
@@ -23,41 +21,17 @@ To install a development environment, just clone this GitHub repository.
 git clone https://github.com/AidanHassett/QAProject1/
 ```
 
-
-## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
-
-### Unit Tests
-
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### Integration Tests
-Explain what these tests test, why and how to run them
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+To download to a live system, download "target/ims-1.0-with-dependencies.jar"
 
 ## Built With
 
 * [Maven](https://maven.apache.org/) - Dependency Management
+* [Git](https://git-scm.com/) - Version Control
+* [GitHub](https://github.com/) - Artefact Repository
+* [JUnit](https://junit.org/) - Unit Testing
+* [Mockito](https://site.mockito.org/) - Unit Testing
 
 ## Versioning
 
