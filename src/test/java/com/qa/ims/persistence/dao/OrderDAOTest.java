@@ -8,12 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
 
-public class CustomerDAOTest {
+public class OrderDAOTest {
 
-	private final CustomerDAO DAO = new CustomerDAO();
+	private final OrderDAO DAO = new OrderDAO();
 
 	@Before
 	public void setup() {
@@ -23,40 +23,48 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chrisp@gmail.com", "Chris", "Perrins");
-		assertEquals(created, DAO.create(created));
+		final Order created = new Order(2L, 1L, 1L);
+		created.addOrderItem(1L, 1L);
+		Order returned = DAO.create(created);
+		assertEquals(created, returned);
+		assertEquals(created.getAllOrderItems(), returned.getAllOrderItems());
 	}
 
 	@Test
 	public void testReadAll() {
-		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jharrison@qa.com", "Jordan", "Harrison"));
+		List<Order> expected = new ArrayList<>();
+		expected.add(new Order(1L, 1L, 1L));
+		expected.get(0).addOrderItem(1L, 1L);
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jharrison@qa.com", "Jordan", "Harrison"), DAO.readLatest());
+		final Order expected = new Order(1L, 1L, 1L);
+		expected.addOrderItem(1L, 1L);
+		assertEquals(expected, DAO.readLatest());
 	}
 
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Customer(ID, "jharrison@qa.com", "Jordan", "Harrison"), DAO.read(ID));
+		final Order expected = new Order(ID, 1L, 1L);
+		expected.addOrderItem(1L, 1L);
+		assertEquals(expected, DAO.read(ID));
 	}
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chrisp@gmail.com", "Chris", "Perrins");
+		final Order updated = new Order(1L, 1L, 1L);
+		updated.addOrderItem(1L, 2L);
 		assertEquals(updated, DAO.update(updated));
-
 	}
 
 	@Test
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
-	
+
 	@Test
 	public void testReadNonExistent() {
 		final long ID = 2L;
@@ -65,7 +73,7 @@ public class CustomerDAOTest {
 
 	@Test
 	public void testUpdateNonExistent() {
-		final Customer updated = new Customer(2L, "chrisp@gmail.com", "Chris", "Perrins");
+		final Order updated = new Order(2L, 1L, 1L);
 		assertEquals(null, DAO.update(updated));
 
 	}

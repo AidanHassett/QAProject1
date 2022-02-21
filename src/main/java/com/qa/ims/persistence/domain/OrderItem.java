@@ -76,22 +76,22 @@ public class OrderItem implements Comparable<OrderItem> {
 			return false;
 		Item other = (Item) obj;
 
-		if (getId() == null) {
-			if (other.getId() != null)
+		if (getOrderId() == null) {
+			if (other.getOrderId() != null)
 				return false;
-		} else if (!id.equals(other.getId()))
+		} else if (!id.equals(other.getOrderId()))
 			return false;
 
-		if (getTitle() == null) {
-			if (other.getTitle() != null)
+		if (getItemId() == null) {
+			if (other.getItemId() != null)
 				return false;
-		} else if (!getTitle().equals(other.getTitle()))
+		} else if (!getItemId().equals(other.getItemId()))
 			return false;
 
-		if (getPrice() == null) {
-			if (other.getPrice() != null)
+		if (getQuantity() == null) {
+			if (other.getQuantity() != null)
 				return false;
-		} else if (!getPrice().equals(other.getPrice()))
+		} else if (!getQuantity().equals(other.getQuantity()))
 			return false;
 
 		return true;
@@ -99,7 +99,6 @@ public class OrderItem implements Comparable<OrderItem> {
 	}
 
 	public int compareTo(OrderItem other) throws NullPointerException, ClassCastException {
-		// NB: does not compare contents of orderItems
 		if (other == null) {
 			throw new NullPointerException();
 		}
@@ -107,16 +106,38 @@ public class OrderItem implements Comparable<OrderItem> {
 			throw new ClassCastException();
 		}
 
-		int temp = this.getOrderId().compareTo(other.getOrderId());
+		int temp = 0;
+		if (this.getOrderId() == null) {
+			if (other.getOrderId() != null) {
+				temp = -1;
+			}
+		} else if (other.getOrderId() == null) {
+			temp = 1;
+		} else {
+			temp = this.getOrderId().compareTo(other.getOrderId());
+		}
 		if (temp != 0) {
 			return temp;
+		} else if (this.getItemId() == null) {
+			if (other.getItemId() != null) {
+				temp = -1;
+			}
+		} else if (other.getItemId() == null) {
+			temp = 1;
 		} else {
 			temp = this.getItemId().compareTo(other.getItemId());
-			if (temp != 0) {
-				return temp;
-			} else {
-				return this.getQuantity().compareTo(other.getQuantity());
-			}
 		}
+		if (temp != 0) {
+			return temp;
+		} else if (this.getQuantity() == null) {
+			if (other.getQuantity() != null) {
+				temp = -1;
+			}
+		} else if (other.getQuantity() == null) {
+			temp = 1;
+		}  else {
+			temp = this.getQuantity().compareTo(other.getQuantity());
+		}
+		return temp;
 	}
 }

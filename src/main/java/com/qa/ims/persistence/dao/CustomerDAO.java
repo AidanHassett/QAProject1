@@ -57,8 +57,9 @@ public class CustomerDAO implements Dao<Customer> {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM customers ORDER BY id DESC LIMIT 1");
 		) {
-			resultSet.next();
-			return modelFromResultSet(resultSet);
+			if (resultSet.next()) {
+				return modelFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -118,7 +119,7 @@ public class CustomerDAO implements Dao<Customer> {
 	public Customer update(Customer customer) {
 		try (
 			Connection connection = DBUtils.getInstance().getConnection();
-			PreparedStatement statement = connection.prepareStatement("UPDATE customers SET email = ?, first_name = ?, surname = ? WHERE id = ?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE customers SET email = ?, firstName = ?, surname = ? WHERE id = ?");
 		) {
 			statement.setString(1, customer.getEmail());
 			statement.setString(2, customer.getFirstName());

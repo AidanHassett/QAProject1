@@ -1,4 +1,4 @@
-DROP SCHEMA ims;
+DROP SCHEMA IF EXISTS ims;
 
 CREATE SCHEMA IF NOT EXISTS ims;
 
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS ims.orders (
   customerId INT NOT NULL,
   timePlaced TIMESTAMP,
   PRIMARY KEY (id),
-  FOREIGN KEY (customerId) REFERENCES customers(id)
+  FOREIGN KEY (customerId) REFERENCES customers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ims.orderItems (
@@ -32,6 +32,6 @@ CREATE TABLE IF NOT EXISTS ims.orderItems (
   itemId INT NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
   PRIMARY KEY (orderId, itemId),
-  FOREIGN KEY (orderId) REFERENCES orders(id),
+  FOREIGN KEY (orderId) REFERENCES orders(id) ON DELETE CASCADE,
   FOREIGN KEY (itemId) REFERENCES items(id)
 );

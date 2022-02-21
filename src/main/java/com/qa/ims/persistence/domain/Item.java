@@ -6,11 +6,6 @@ public class Item implements Comparable<Item> {
 	private String title;
 	private Long price;	//price stored as an integer of pence
 
-	public Item(String title, Long price) {
-		this.setTitle(title);
-		this.setPrice(price);
-	}
-
 	public Item(String title, Long pounds, Long pence) {
 		this.setTitle(title);
 		this.setPrice(pounds, pence);
@@ -19,11 +14,6 @@ public class Item implements Comparable<Item> {
 	public Item(String title, double price) {
 		this.setTitle(title);
 		this.setPrice(price);
-	}
-
-	public Item(Long id, String title, Long price) {
-		this(title, price);
-		this.setId(id);
 	}
 
 	public Item(Long id, String title, Long pounds, Long pence) {
@@ -52,16 +42,12 @@ public class Item implements Comparable<Item> {
 		this.title = title;
 	}
 
-	public Double getPrice() {
+	public double getPrice() {
 		return price / 100.0;
 	}
 
 	public String getPriceStr() {
-		return "£" + (price / 100) + "." + (price % 100);
-	}
-
-	public void setPrice(Long price) {
-		this.price = price;
+		return "£" + (price / 100) + "." + String.format("%02d", price % 100);
 	}
 
 	public void setPrice(Long pounds, Long pence) {
@@ -69,7 +55,7 @@ public class Item implements Comparable<Item> {
 	}
 
 	public void setPrice(double price) {
-		setPrice((Long) Math.round(price * 100));
+		this.price = Math.round(price * 100);
 	}
 
 	@Override
@@ -137,16 +123,35 @@ public class Item implements Comparable<Item> {
 			throw new ClassCastException();
 		}
 
-		int temp = this.getId().compareTo(other.getId());
+		int temp = 0;
+		if (this.getId() == null) {
+			if (other.getId() != null) {
+				temp = -1;
+			}
+		} else if (other.getId() == null) {
+			temp = 1;
+		} else {
+			temp = this.getId().compareTo(other.getId());
+		}
 		if (temp != 0) {
 			return temp;
+		} else if (this.getTitle() == null) {
+			if (other.getTitle() != null) {
+				temp = -1;
+			}
+		} else if (other.getTitle() == null) {
+			temp = 1;
 		} else {
 			temp = this.getTitle().compareTo(other.getTitle());
-			if (temp != 0) {
-				return temp;
-			} else {
-				return this.getPrice().compareTo(other.getPrice());
-			}
+		}
+		if (temp != 0) {
+			return temp;
+		} else if (this.getPrice() > other.getPrice()) {
+			return 1;
+		} else if (this.getPrice() < other.getPrice()) {
+			return -1;
+		} else {
+			return 0;
 		}
 	}
 }
