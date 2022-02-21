@@ -1,4 +1,4 @@
-Coverage: 86.2%
+Coverage: 87.1%
 # Project Title
 
 A console based IMS which allows for the creation of customers, items and orders.

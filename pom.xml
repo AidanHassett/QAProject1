@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.qa</groupId>
 	<artifactId>ims</artifactId>
-	<version>0.1.1</version>
+	<version>1.0</version>
 
 	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -58,7 +58,7 @@
 
 	<build>
 		<plugins>
-			<!-- Creates a jar for the code (does not contain other dependencies which 
+			<!-- Creates a jar for the code (does not contain other dependencies which
 				are needed for the project to run out of the box) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -74,7 +74,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the 
+			<!-- Creates a "fat jar" with jar-with-dependencies at the end of the
 				project jar -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -108,7 +108,7 @@
 				</executions>
 			</plugin>
 
-			<!-- Plugin for code coverage. Useful as sonarqube integrates well with 
+			<!-- Plugin for code coverage. Useful as sonarqube integrates well with
 				jacoco -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
