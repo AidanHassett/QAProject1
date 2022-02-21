@@ -56,8 +56,9 @@ public class ItemDAO implements Dao<Item> {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM items ORDER BY id DESC LIMIT 1");
 		) {
-			resultSet.next();
-			return modelFromResultSet(resultSet);
+			if (resultSet.next()) {
+				return modelFromResultSet(resultSet);
+			}
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

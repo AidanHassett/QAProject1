@@ -32,8 +32,8 @@ public enum YesNo {
 	 * Prints out both possible actions
 	 */
 	public static void printYesNo() {
-		for (Action action : Action.values()) {
-			LOGGER.info(action.getDescription());
+		for (YesNo yn : YesNo.values()) {
+			LOGGER.info(yn.getDescription());
 		}
 	}
 

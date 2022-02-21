@@ -124,21 +124,49 @@ public class Customer implements Comparable<Customer> {
 			throw new ClassCastException();
 		}
 
-		int temp = this.getId().compareTo(other.getId());
+		int temp = 0;
+		if (this.getId() == null) {
+			if (other.getId() != null) {
+				temp = -1;
+			}
+		} else if (other.getId() == null) {
+			temp = 1;
+		} else {
+			temp = this.getId().compareTo(other.getId());
+		}
 		if (temp != 0) {
 			return temp;
+		} else if (this.getSurname() == null) {
+			if (other.getSurname() != null) {
+				temp = -1;
+			}
+		} else if (other.getSurname() == null) {
+			temp = 1;
 		} else {
 			temp = this.getSurname().compareTo(other.getSurname());
-			if (temp != 0) {
-				return temp;
-			} else {
-				temp = this.getFirstName().compareTo(other.getFirstName());
-				if (temp != 0) {
-					return temp;
-				} else {
-					return this.getEmail().compareTo(other.getEmail());
-				}
-			}
 		}
+		if (temp != 0) {
+			return temp;
+		} else if (this.getFirstName() == null) {
+			if (other.getFirstName() != null) {
+				temp = -1;
+			}
+		} else if (other.getFirstName() == null) {
+			temp = 1;
+		} else {
+			temp = this.getFirstName().compareTo(other.getFirstName());
+		}
+		if (temp != 0) {
+			return temp;
+		} else if (this.getEmail() == null) {
+			if (other.getEmail() != null) {
+				temp = -1;
+			}
+		} else if (other.getEmail() == null) {
+			temp = 1;
+		}  else {
+			temp = this.getEmail().compareTo(other.getEmail());
+		}
+		return temp;
 	}
 }
