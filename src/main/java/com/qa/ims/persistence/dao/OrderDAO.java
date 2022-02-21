@@ -111,9 +111,10 @@ public class OrderDAO implements Dao<Order> {
 			statement.setLong(1, order.getCustomerId());
 			statement.setTimestamp(2, order.getTimePlaced());
 			statement.executeUpdate();
+			Long orderId = readLatest().getId();
 			for (OrderItem oi : order.getAllOrderItems()) {
 				try (PreparedStatement itemStatement = connection.prepareStatement("INSERT INTO orderItems(orderId, itemId, quantity) VALUES (?, ?, ?)");) {
-					itemStatement.setLong(1, oi.getOrderId());
+					itemStatement.setLong(1, orderId);
 					itemStatement.setLong(2, oi.getItemId());
 					itemStatement.setLong(3, oi.getQuantity());
 					itemStatement.executeUpdate();
